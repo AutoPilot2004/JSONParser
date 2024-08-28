@@ -34,7 +34,7 @@ namespace
 
 	JSONToken parse_string(std::ifstream& f, char c)
 	{
-		assert(c == '"');
+		if (c != '"') throw std::runtime_error("Invalid string");
 
 		std::string str;
 
@@ -54,7 +54,7 @@ namespace
 			str += c;
 		}
 
-		if (!not_eof) throw std::runtime_error("Missing '\"'");
+		if (!not_eof) throw std::runtime_error("Invalid string");
 
 		return { JSONTokenType::STRING_V, str };
 	}
@@ -64,8 +64,6 @@ namespace
 
 	JSONToken parse_number(std::ifstream& f, char c)
 	{
-		assert(isdigit(c) || c == '-');
-
 		std::string str;
 		str += c;
 
@@ -74,6 +72,7 @@ namespace
 		bool digitReq = false;
 
 		if (c == '-' && read_char(f, c)) str += c;
+		if (!isdigit(c)) throw std::runtime_error("Invalid number");
 		if (c == '0') {
 			if (read_char(f, c)) {
 				if (isdigit(c)) throw std::runtime_error("Invalid number");
