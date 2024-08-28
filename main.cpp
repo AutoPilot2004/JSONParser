@@ -22,33 +22,43 @@ std::ostream& operator<<(std::ostream& s, JSONTokenType t)
 
 void print(const JSONToken& token)
 {
-	if (is_bool(token))   std::cout << "BOOL";
-	if (is_null(token))   std::cout << "NULL";
-	if (is_string(token)) std::cout << "STRING";
-	if (is_number(token)) {
+	if (token.type == JSONTokenType::KEYWORD_V) std::cout << "KEYWORD";
+	if (token.type == JSONTokenType::STRING_V)  std::cout << "STRING";
+	if (token.type == JSONTokenType::NUMBER_V) {
 		std::cout << "NUMBER";
 		std::cout << "(d form: " << std::stod(token.lexeme) << ')';
 	}
 }
 
+#define v(c) "\c"
+
 int main()
 {
 	std::ifstream file("hello.txt");
 
-	try {
+	std::cout << "\n\n\n\n\n\n";
+
+	char c[] = { '\\', 'n', '\0'};
+
+	std::string s;
+	s += 'b';
+	s += c;
+	s += 'n';
+
+	std::cout << (std::string)s;
+
+	std::cout << "\n\n\n\n\n\n";
+
+	
 		auto d = tokenize(file);
 
 		for (const auto& t : d) {
 			std::cout << t.type;
 			print(t);
-			if (t.type == JSONTokenType::VALUE) std::cout << ": " << t.lexeme;
+			if (is_value(t)) std::cout << ": " << t.lexeme;
 			std::cout << std::endl;
 		}
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	
 
 	return 0;
 }

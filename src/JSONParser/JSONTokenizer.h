@@ -6,13 +6,17 @@
 
 enum class JSONTokenType
 {
+	//SYNTAX
 	LEFT_BRACE,
 	RIGHT_BRACE,
 	COMMA,
 	COLON,
 	LEFT_BRACK,
 	RIGHT_BRACK,
-	VALUE
+	//VALUES
+	STRING_V,
+	NUMBER_V,
+	KEYWORD_V
 };
 
 struct JSONToken
@@ -23,7 +27,4 @@ struct JSONToken
 
 std::vector<JSONToken> tokenize(std::ifstream& f);
 
-bool is_string(const JSONToken& token);
-bool is_number(const JSONToken& token);
-bool is_bool(const JSONToken& token);
-bool is_null(const JSONToken& token);
+bool is_value(JSONToken token);
