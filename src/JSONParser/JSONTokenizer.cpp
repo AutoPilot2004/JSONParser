@@ -15,6 +15,14 @@ namespace
 		return !f.eof();
 	}
 
+	//TODO: CHANGE NAME
+	bool is_valid_idk(char c)
+	{
+		return c == ',' ||
+			   c == '}' ||
+			   c == ']';
+	}
+
 	void push_ctrl_char_to_string(char c, auto& str)
 	{
 		switch (c) {
@@ -59,9 +67,6 @@ namespace
 		return { JSONTokenType::STRING_V, str };
 	}
 
-	//0.324
-	//532.32e5
-
 	JSONToken parse_number(std::ifstream& f, char c)
 	{
 		std::string str;
@@ -81,6 +86,11 @@ namespace
 		}
 
 		while (read_char(f, c) && !isspace(c)) {
+			if (is_valid_idk(c)) {
+				f.unget();
+				break;
+			}
+
 			str += c;
 
 			if (isdigit(c)) {
@@ -112,7 +122,14 @@ namespace
 		str += c;
 
 		size_t i = 0;
-		while (read_char(f, c) && !isspace(c) && ++i < 6) str += c;
+		while (read_char(f, c) && !isspace(c) && ++i < 6) {
+			if (is_valid_idk(c)) {
+				f.unget();
+				break;
+			}
+
+			str += c;
+		}
 
 		if (!(str == "false" || str == "true" || str == "null")) throw std::runtime_error("Invalid keyword");
 

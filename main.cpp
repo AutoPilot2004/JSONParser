@@ -1,7 +1,8 @@
 #include <fstream>
 #include "src/JSONParser/JSONTokenizer.h"
 #include <iostream>
-
+#include "src/JSONParser/JSONParser.h"
+/*
 std::ostream& operator<<(std::ostream& s, JSONTokenType t)
 {
 	std::string str;
@@ -29,12 +30,14 @@ void print(const JSONToken& token)
 		std::cout << "(d form: " << std::stod(token.lexeme) << ')';
 	}
 }
+*/
 
 #define v(c) "\c"
 
 int main()
 {
 	std::ifstream file("hello.txt");
+	if (file.fail()) return 5;
 
 	std::cout << "\n\n\n\n\n\n";
 
@@ -49,16 +52,27 @@ int main()
 
 	std::cout << "\n\n\n\n\n\n";
 
-	
-		auto d = tokenize(file);
+	auto b = parse(file);
 
-		for (const auto& t : d) {
-			std::cout << t.type;
-			print(t);
-			if (is_value(t)) std::cout << ": " << t.lexeme;
-			std::cout << std::endl;
-		}
+	const auto& val = *static_cast<AST::Value::Object*>(b.get());
+
+	for (const auto& [name, value]: val.pairs) {
+		std::cout << name << std::endl;
+	}
+
+	bool br = false;
+
+	int i;
 	
+	for (i = 0; i < 5 && !br; i++) {
+		std::cout << i << std::endl;
+
+		break;
+	}
+
+	std::cout << i;
+
+	std::cin.get();
 
 	return 0;
 }

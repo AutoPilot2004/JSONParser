@@ -13,6 +13,7 @@ enum class JSONTokenType
 	COLON,
 	LEFT_BRACK,
 	RIGHT_BRACK,
+
 	//VALUES
 	STRING_V,
 	NUMBER_V,
@@ -25,6 +26,6 @@ struct JSONToken
 	std::string lexeme;
 };
 
-std::vector<JSONToken> tokenize(std::ifstream& f);
+[[nodiscard]] std::vector<JSONToken> tokenize(std::ifstream& f);
 
 bool is_value(JSONToken token);

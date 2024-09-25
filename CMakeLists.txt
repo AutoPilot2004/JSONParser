@@ -2,6 +2,6 @@
 
 project ("JSONParser")
 
-add_executable(x "main.cpp" "src/JSONParser/JSONTokenizer.cpp")
+add_executable(x "main.cpp" "src/JSONParser/JSONTokenizer.cpp" "src/JSONParser/JSONParser.cpp")
 
 set_target_properties(x PROPERTIES CXX_STANDARD 23)
