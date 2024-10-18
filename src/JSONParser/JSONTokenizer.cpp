@@ -7,7 +7,6 @@
 
 namespace
 {
-
 	bool read_char(std::ifstream& f, char& c)
 	{
 		c = f.get();
@@ -15,8 +14,7 @@ namespace
 		return !f.eof();
 	}
 
-	//TODO: CHANGE NAME
-	bool is_valid_idk(char c)
+	bool is_div_symbol(char c)
 	{
 		return c == ',' ||
 			   c == '}' ||
@@ -86,7 +84,7 @@ namespace
 		}
 
 		while (read_char(f, c) && !isspace(c)) {
-			if (is_valid_idk(c)) {
+			if (is_div_symbol(c)) {
 				f.unget();
 				break;
 			}
@@ -123,7 +121,7 @@ namespace
 
 		size_t i = 0;
 		while (read_char(f, c) && !isspace(c) && ++i < 6) {
-			if (is_valid_idk(c)) {
+			if (is_div_symbol(c)) {
 				f.unget();
 				break;
 			}

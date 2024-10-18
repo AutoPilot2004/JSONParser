@@ -2,6 +2,9 @@
 #include "src/JSONParser/JSONTokenizer.h"
 #include <iostream>
 #include "src/JSONParser/JSONParser.h"
+#include <nlohmann/json.hpp>
+#include <string>
+#include "src/JSONParser/JSON.h"
 /*
 std::ostream& operator<<(std::ostream& s, JSONTokenType t)
 {
@@ -34,12 +37,47 @@ void print(const JSONToken& token)
 
 #define v(c) "\c"
 
+struct A
+{
+	std::string name = "aleeennnn";
+	int age = 125;
+	A() = default;
+};
+
+
+//TODO: IMPLICIT CONVERSIONS
+//TODO: CONSTRUCTORS
+/*void from_json(const JSON& j, A& p)
+{
+	std::string s = "hello";
+	p.name = j["hello"].as<std::string>();
+}
+
+void to_json(JSON& j, const A& a)
+{
+	j["name"] = a.name;
+	j["age"] = a.age;
+}*/
+
 int main()
 {
-	std::ifstream file("hello.txt");
+	std::ifstream file("large-file.json");
 	if (file.fail()) return 5;
 
-	std::cout << "\n\n\n\n\n\n";
+
+	using nlohmann::json;
+
+	//json kj = json::parse(file);
+
+
+
+	JSON j = parse(file);
+	std::cout << "foo";
+
+
+	std::cin.get();
+
+	/*std::cout << "\n\n\n\n\n\n";
 
 	char c[] = { '\\', 'n', '\0'};
 
@@ -72,7 +110,7 @@ int main()
 
 	std::cout << i;
 
-	std::cin.get();
+	std::cin.get();*/
 
 	return 0;
 }

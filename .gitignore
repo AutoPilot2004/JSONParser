@@ -1,5 +1,7 @@
 .vs/
 out/
 
+CMakeSettings.json
 CMakePresets.json
+
 vcpkg.json
