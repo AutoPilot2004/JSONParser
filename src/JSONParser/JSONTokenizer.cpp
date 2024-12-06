@@ -177,7 +177,7 @@ std::vector<JSONToken> tokenize(std::ifstream& f)
 			token = parse_symbol(c);
 		}
 
-		tokens.push_back(token);
+		tokens.push_back(std::move(token));
 	}
 
 	return tokens;
